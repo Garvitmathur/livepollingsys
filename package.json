@@ -4,7 +4,7 @@
   "description": "A real-time live polling system for teachers and students",
   "main": "index.js",
   "scripts": {
-    "dev": "next dev",
+    "dev": "next dev -p 4001",
     "build": "next build",
     "start": "node server.js",
     "lint": "next lint",
