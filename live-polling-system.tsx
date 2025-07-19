@@ -95,6 +95,9 @@ const LivePollingSystem = () => {
 
   // Initialize socket connection
   useEffect(() => {
+    // Only create socket if it doesn't exist
+    if (socket) return;
+
     const socketUrl = process.env.NEXT_PUBLIC_SOCKET_URL || 
       (typeof window !== 'undefined' 
         ? 'http://localhost:3001' 
@@ -174,9 +177,11 @@ const LivePollingSystem = () => {
     });
 
     return () => {
-      newSocket.close();
+      if (newSocket) {
+        newSocket.close();
+      }
     };
-  }, []);
+  }, [socket]);
 
   // Load student name from localStorage on component mount
   useEffect(() => {
@@ -211,8 +216,8 @@ const LivePollingSystem = () => {
   const createPoll = (question: string, options: string[], timeLimit: number = 60) => {
     if (socket) {
       socket.emit('create-poll', sessionId, {
-        question,
-        options,
+      question,
+      options,
         timeLimit
       });
     }
@@ -505,7 +510,7 @@ const LivePollingSystem = () => {
       
       {/* Chat and Participants buttons */}
       <div className="fixed bottom-4 right-4 flex gap-2">
-        <ChatButton />
+      <ChatButton />
         <ParticipantsButton />
       </div>
     </div>
