@@ -100,7 +100,7 @@ const LivePollingSystem = () => {
 
     const socketUrl = process.env.NEXT_PUBLIC_SOCKET_URL || 
       (typeof window !== 'undefined' 
-        ? window.location.origin 
+        ? 'http://localhost:4000'
         : 'http://localhost:4000');
     const newSocket = io(socketUrl, {
       transports: ['websocket', 'polling'],
