@@ -1,6 +1,8 @@
 import React from 'react';
 import LivePollingSystem from '../live-polling-system';
 
-export default function Home() {
+const Home: React.FC = () => {
   return <LivePollingSystem />;
-} 
+};
+
+export default Home; 
