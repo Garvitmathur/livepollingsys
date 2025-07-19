@@ -96,9 +96,9 @@ const LivePollingSystem = () => {
   // Initialize socket connection
   useEffect(() => {
     const socketUrl = process.env.NEXT_PUBLIC_SOCKET_URL || 
-      (typeof window !== 'undefined' && window.location.hostname === 'localhost' 
-        ? 'http://localhost:3000' 
-        : window.location.origin);
+      (typeof window !== 'undefined' 
+        ? window.location.origin 
+        : 'http://localhost:3000');
     const newSocket = io(socketUrl, {
       transports: ['websocket', 'polling'],
       timeout: 20000,
@@ -116,6 +116,11 @@ const LivePollingSystem = () => {
     newSocket.on('disconnect', () => {
       setIsConnected(false);
       console.log('❌ Disconnected from server');
+    });
+
+    newSocket.on('connect_error', (error) => {
+      console.error('❌ Connection error:', error);
+      setIsConnected(false);
     });
 
     newSocket.on('session-data', (sessionData) => {
