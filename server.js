@@ -12,7 +12,7 @@ const handle = app.getRequestHandler();
 // Store active sessions and their data
 const sessions = new Map();
 
-// Create Express server first
+// Create Express server
 const server = express();
 const httpServer = http.createServer(server);
 const io = socketIo(httpServer, {
@@ -33,15 +33,6 @@ server.get('/health', (req, res) => {
     activeSessions: sessions.size,
     timestamp: new Date().toISOString(),
     environment: process.env.NODE_ENV || 'development'
-  });
-});
-
-// Basic root endpoint
-server.get('/', (req, res) => {
-  res.json({ 
-    message: 'Live Polling System API',
-    status: 'running',
-    timestamp: new Date().toISOString()
   });
 });
 
